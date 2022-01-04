@@ -11,16 +11,16 @@ import { RootState } from "../modules";
 
 const Section = styled.section`
   height: 100vh;
-  padding: 150px 200px;
+  padding: 150px 50px;
 `;
 const fadeInAnimation = `
   opacity: 1;
-  transition: opacity 2s ease-in-out;
+  transition: opacity 2s 0.5s ease-in-out;
 `;
 
 const fadeOutAnimation = `
   opacity: 0;
-  transition: opacity 2s ease-in-out;
+  transition: opacity 2s 0.5s ease-in-out;
 `;
 export default function Home() {
   const dispatch = useDispatch();
@@ -48,7 +48,7 @@ export default function Home() {
           }
         });
       },
-      { threshold: 0.1 }
+      { threshold: 0.2 }
     );
 
     if(mainRef.current) {
