@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
 
 import Main from "../components/Home/Main";
 import About from "../components/Home/About";
@@ -13,7 +13,15 @@ const Section = styled.section`
   height: 100vh;
   padding: 150px 200px;
 `;
+const fadeInAnimation = `
+  opacity: 1;
+  transition: opacity 2s ease-in-out;
+`;
 
+const fadeOutAnimation = `
+  opacity: 0;
+  transition: opacity 2s ease-in-out;
+`;
 export default function Home() {
   const dispatch = useDispatch();
 
@@ -30,6 +38,13 @@ export default function Home() {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
             dispatch(setHomeView(entry.target.id));
+            if(entry.target instanceof HTMLElement){
+              entry.target.style.cssText = fadeInAnimation;
+            }
+          } else {
+            if(entry.target instanceof HTMLElement){
+              entry.target.style.cssText = fadeOutAnimation;
+            }
           }
         });
       },
