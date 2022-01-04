@@ -9,6 +9,7 @@ const GlobalStyle = createGlobalStyle`
     html {
         font-size: 14px;
         font-family: 'Noto Sans KR';
+        overflow-x: hidden;
     }
     
     li {
