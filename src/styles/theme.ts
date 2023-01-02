@@ -23,13 +23,13 @@ const fontFamily = {
 
 const colorLight = {
   background: "#FCFCFC",
-  primary: "#00E45B",
+  primary: "#FF4D00",
   fontPrimary: "#2E2E2E",
 };
 
 const colorDark = {
   background: "#2E2E2E",
-  primary: "#00E45B",
+  primary: "#FF4D00",
   fontPrimary: "#FCFCFC",
 };
 
