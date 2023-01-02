@@ -8,6 +8,10 @@ const GlobalStyle = createGlobalStyle`
         font-size: 14px;
         font-family: 'Noto Sans KR';
     }
+    
+    li {
+        list-style: none;
+    }
 `;
 
 export default GlobalStyle;
