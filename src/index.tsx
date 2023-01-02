@@ -7,7 +7,7 @@ import { ThemeProvider } from "styled-components";
 import { theme } from "./styles/theme";
 
 const root = ReactDOM.createRoot(
-  document.getElementById("root") as HTMLElement,
+  document.getElementById("root") as HTMLElement
 );
 root.render(
   <React.StrictMode>
@@ -15,5 +15,5 @@ root.render(
       <GlobalStyle />
       <App />
     </ThemeProvider>
-  </React.StrictMode>,
+  </React.StrictMode>
 );
