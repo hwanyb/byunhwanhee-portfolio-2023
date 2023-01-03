@@ -10,7 +10,7 @@ const Base = styled.header`
   padding: 50px 200px;
   display: grid;
   align-items: center;
-  grid-template-columns: 1fr 3fr 1fr;
+  grid-template-columns: 1fr 5fr 1fr;
   backdrop-filter: blur(2px);
 `;
 const LogoWrapper = styled.div``;
@@ -26,7 +26,6 @@ const NavItem = styled.li`
   font-size: ${(props) => props.theme.fontSize.base};
   font-weight: 300;
   color: ${(props) => props.theme.colorLight.fontPrimary};
-  margin-right: 20px;
   transition: all 0.2s ease-in-out;
   &:last-child {
     margin-right: 0;
@@ -45,7 +44,7 @@ const ModeIcon = styled.img``;
 const ModeToggle = styled.div`
   transition: all 0.2s ease-in-out;
   border-radius: 20px;
-  width: 50px;
+  width: 40px;
   height: 20px;
   background-color: ${(props) => props.theme.colorLight.background};
   border: 1px solid ${(props) => props.theme.colorLight.fontPrimary};
