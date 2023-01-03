@@ -8,6 +8,8 @@ import Contact from "../components/Home/Contact";
 import { ScrollContainer } from "react-scroll-motion";
 
 const Base = styled(ScrollContainer)`
+  position: relative;
+  top: 150px;
 `;
 
 export default function Home() {
