@@ -14,7 +14,7 @@ const Base = styled.header`
   display: grid;
   align-items: center;
   grid-template-columns: 1fr 5fr 1fr;
-  backdrop-filter: blur(2px);
+  backdrop-filter: blur(5px);
 `;
 const LogoWrapper = styled.div``;
 const LogoImg = styled.img``;
