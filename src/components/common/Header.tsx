@@ -3,28 +3,29 @@ import styled from "styled-components";
 
 const Base = styled.header`
   position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    padding: 50px 200px;
-    display: grid;
-    align-items: center;
-    grid-template-columns: 1fr 3fr 1fr;
-    backdrop-filter: blur(2px);
+  z-index: 999;
+  top: 0;
+  left: 0;
+  width: 100%;
+  padding: 50px 200px;
+  display: grid;
+  align-items: center;
+  grid-template-columns: 1fr 3fr 1fr;
+  backdrop-filter: blur(2px);
 `;
 const LogoWrapper = styled.div``;
 const LogoImg = styled.img``;
 const Nav = styled.nav`
-    display: flex;
-    justify-self: end;
+  display: flex;
+  justify-self: end;
 `;
 const NavItem = styled.li`
   text-align: center;
   min-width: 100px;
-  font-family: ${props => props.theme.fontFamily.notoSerif};
-  font-size: ${props => props.theme.fontSize.base};
+  font-family: ${(props) => props.theme.fontFamily.notoSerif};
+  font-size: ${(props) => props.theme.fontSize.base};
   font-weight: 300;
-  color: ${props => props.theme.colorLight.fontPrimary};
+  color: ${(props) => props.theme.colorLight.fontPrimary};
   margin-right: 20px;
   transition: all 0.2s ease-in-out;
   &:last-child {
@@ -32,7 +33,7 @@ const NavItem = styled.li`
   }
   &:hover {
     font-weight: 700;
-    color: ${props => props.theme.colorLight.primary};
+    color: ${(props) => props.theme.colorLight.primary};
   }
 `;
 const ModeToggleWrapper = styled.div`
@@ -46,8 +47,8 @@ const ModeToggle = styled.div`
   border-radius: 20px;
   width: 50px;
   height: 20px;
-  background-color: ${props => props.theme.colorLight.background};
-  border: 1px solid ${props => props.theme.colorLight.fontPrimary};
+  background-color: ${(props) => props.theme.colorLight.background};
+  border: 1px solid ${(props) => props.theme.colorLight.fontPrimary};
   margin: 0 10px;
   padding: 2px;
   display: flex;
@@ -59,10 +60,10 @@ const ToggleCircle = styled.div`
   transition: all 0.2s ease-in-out;
   width: 14px;
   height: 14px;
-  border: 1px solid ${props => props.theme.colorLight.fontPrimary};
+  border: 1px solid ${(props) => props.theme.colorLight.fontPrimary};
   border-radius: 50%;
-  &:hover{
-    background-color: ${props => props.theme.colorLight.fontPrimary};
+  &:hover {
+    background-color: ${(props) => props.theme.colorLight.fontPrimary};
   }
 `;
 
@@ -70,7 +71,7 @@ export default function Header() {
   return (
     <Base>
       <LogoWrapper>
-        <LogoImg src={process.env.PUBLIC_URL + '/assets/logo_70.png'} />
+        <LogoImg src={process.env.PUBLIC_URL + "/assets/logo_70.png"} />
       </LogoWrapper>
       <Nav>
         <NavItem>Home</NavItem>
@@ -79,11 +80,11 @@ export default function Header() {
         <NavItem>Contact</NavItem>
       </Nav>
       <ModeToggleWrapper>
-        <ModeIcon src={process.env.PUBLIC_URL + '/assets/light_light.png'} />
+        <ModeIcon src={process.env.PUBLIC_URL + "/assets/light_light.png"} />
         <ModeToggle>
           <ToggleCircle />
         </ModeToggle>
-        <ModeIcon src={process.env.PUBLIC_URL + '/assets/light_dark.png'} />
+        <ModeIcon src={process.env.PUBLIC_URL + "/assets/light_dark.png"} />
       </ModeToggleWrapper>
     </Base>
   );
