@@ -1,5 +1,8 @@
 import React from "react";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "../../modules";
+import { setIsDarkMode } from "../../modules/modeReducer";
 
 const Base = styled.header`
   position: fixed;
@@ -25,7 +28,6 @@ const NavItem = styled.li`
   font-family: ${(props) => props.theme.fontFamily.notoSerif};
   font-size: ${(props) => props.theme.fontSize.base};
   font-weight: 300;
-  color: ${(props) => props.theme.colorLight.fontPrimary};
   transition: all 0.2s ease-in-out;
   &:last-child {
     margin-right: 0;
@@ -41,32 +43,55 @@ const ModeToggleWrapper = styled.div`
   justify-self: end;
 `;
 const ModeIcon = styled.img``;
-const ModeToggle = styled.div`
+const ModeToggle = styled.div<{ isDarkMode: boolean }>`
+  ${(props) =>
+    props.isDarkMode
+      ? css`
+          border: 1px solid ${(props) => props.theme.colorDark.fontPrimary};
+          justify-content: end;
+        `
+      : css`
+          border: 1px solid ${(props) => props.theme.colorLight.fontPrimary};
+          justify-content: start;
+        `}
   transition: all 0.2s ease-in-out;
   border-radius: 20px;
   width: 40px;
   height: 20px;
-  background-color: ${(props) => props.theme.colorLight.background};
-  border: 1px solid ${(props) => props.theme.colorLight.fontPrimary};
   margin: 0 10px;
   padding: 2px;
   display: flex;
-  justify-content: start;
   align-items: center;
   cursor: pointer;
 `;
-const ToggleCircle = styled.div`
+const ToggleCircle = styled.div<{ isDarkMode: boolean }>`
+  ${(props) =>
+    props.isDarkMode
+      ? css`
+          border: 1px solid ${props.theme.colorDark.fontPrimary};
+        `
+      : css`
+          border: 1px solid ${props.theme.colorLight.fontPrimary};
+        `}
+
   transition: all 0.2s ease-in-out;
   width: 14px;
   height: 14px;
-  border: 1px solid ${(props) => props.theme.colorLight.fontPrimary};
   border-radius: 50%;
-  &:hover {
-    background-color: ${(props) => props.theme.colorLight.fontPrimary};
-  }
 `;
 
 export default function Header() {
+  const dispatch = useDispatch();
+
+  const isDarkMode = useSelector(
+    (state: RootState) => state.modeReducer.isDarkMode,
+  );
+
+  const onToggleMode = () => {
+    dispatch(setIsDarkMode());
+    localStorage.setItem("darkMode", JSON.stringify(!isDarkMode));
+  };
+
   return (
     <Base>
       <LogoWrapper>
@@ -79,11 +104,25 @@ export default function Header() {
         <NavItem>Contact</NavItem>
       </Nav>
       <ModeToggleWrapper>
-        <ModeIcon src={process.env.PUBLIC_URL + "/assets/light_light.png"} />
-        <ModeToggle>
-          <ToggleCircle />
+        <ModeIcon
+          src={
+            isDarkMode
+              ? process.env.PUBLIC_URL + "/assets/dark_light.png"
+              : process.env.PUBLIC_URL + "/assets/light_light.png"
+          }
+          style={{ opacity: isDarkMode ? 0.2 : 1 }}
+        />
+        <ModeToggle onClick={onToggleMode} isDarkMode={isDarkMode}>
+          <ToggleCircle isDarkMode={isDarkMode} />
         </ModeToggle>
-        <ModeIcon src={process.env.PUBLIC_URL + "/assets/light_dark.png"} />
+        <ModeIcon
+          src={
+            isDarkMode
+              ? process.env.PUBLIC_URL + "/assets/dark_dark.png"
+              : process.env.PUBLIC_URL + "/assets/light_dark.png"
+          }
+          style={{ opacity: isDarkMode ? 1 : 0.2 }}
+        />
       </ModeToggleWrapper>
     </Base>
   );

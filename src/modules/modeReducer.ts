@@ -10,8 +10,11 @@ type ModeState = {
     isDarkMode: boolean;
 }
 
+const darkMode = localStorage.getItem("darkMode");
+const isDarkMode = darkMode !== null ? JSON.parse(darkMode) : false;
+
 const initialState: ModeState = {
-    isDarkMode: false
+    isDarkMode: isDarkMode
 };
 
 function modeReducer(
