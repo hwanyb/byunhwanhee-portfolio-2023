@@ -9,7 +9,7 @@ import Projects from "./pages/Projects";
 
 
 const Base = styled.div`
-  background-color: ${props => props.theme.colorLight.backgroud};
+  background-color: ${(props) => props.theme.colorLight.backgroud};
 `;
 
 function App() {
