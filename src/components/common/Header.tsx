@@ -10,6 +10,7 @@ const Base = styled.header`
     display: grid;
     align-items: center;
     grid-template-columns: 1fr 3fr 1fr;
+    backdrop-filter: blur(2px);
 `;
 const LogoWrapper = styled.div``;
 const LogoImg = styled.img``;
