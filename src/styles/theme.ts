@@ -1,9 +1,10 @@
 import { DefaultTheme } from "styled-components";
 
 const windowSize = {
-  small: `screen and (max-width: '600px')`,
-  base: `screen and (max-width: '768px')`,
-  large: `screen and (max-width: '1024px')`,
+  mobile: `screen and (max-width: '480px')`,
+  tablet: `screen and (max-width: '768px')`,
+  laptop: `screen and (max-width: '1024px')`,
+  desktop: `screen and (max-width: '1600px')`,
 };
 
 const fontSize = {
