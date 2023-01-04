@@ -1,0 +1,38 @@
+[
+    {
+        "id": 1,
+        "title": "포트폴리오 웹사이트",
+        "date": "2023-01-02 ~ 2023-01-16",
+        "desc": "현재 사이트인 <b>포트폴리오 웹사이트</b>입니다.<br />html, css, jQuery로 개발되었던 기존의 포트폴리오의 성능과 코드 유지보수성 개선 등을 위해<br /><b>React</b>를 활용하여 포트폴리오를 다시 개발하였습니다.<br /><b>다크모드</b>와 <b>댓글기능</b>을 추가해 개발하였습니다.",
+        "demoUrl": "",
+        "githubUrl": "https://github.com/hwanyb/byunhwanhee-portfolio-2023",
+        "color": "#FF4D00",
+        "thumbnail": "/assets/portfolio_thumbnail.png",
+        "mainFunc": "간단한 자기소개, 인적사항, 기술 스택, Github 및 블로그 링크, 프로젝트 경험",
+        "stack": "React, Typescript, redux, styled-components, firebase"
+    },
+    {
+        "id": 2,
+        "title": "서문시장 야시장",
+        "date": "2022-09-10 ~ 2022-09-24",
+        "desc": "기존의 서문시장야시장 웹사이트를 리뉴얼하여 개발한 웹사이트입니다.<br />",
+        "demoUrl": "https://hwanyb.github.io/seomunnight/",
+        "githubUrl": "https://github.com/hwanyb/seomunnight",
+        "color": "#081435",
+        "thumbnail": "/assets/seomun_thumbnail.png",
+        "mainFunc": "서문시장 야시장 소개, 서문시장 야시장 먹거리 리스트 제공, 공지사항 리스트, 공지사항 작성 등",
+        "stack": "React, Javascript, Styled-components, React-router-dom"
+    },
+    {
+        "id": 3,
+        "title": "서문시장 야시장",
+        "date": "2022-09-10 ~ 2022-09-24",
+        "desc": "",
+        "demoUrl": "",
+        "githubUrl": "https://github.com/hwanyb/mandalable",
+        "color": "#497BFB",
+        "thumbnail": "/assets/mandalable_thumbnail.png",
+        "mainFunc": "만다라트 생성기능, 만다라트 실천과제 Todo로 완료 / 미완료 체크 기능, Todo 완료 기준으로 만다라트 성공률 확인 기능",
+        "stack": "React, Typescript, redux, styled-components, firebase"
+    }
+]
