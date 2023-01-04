@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 import { RootState } from "../../modules";
 import { setIsDarkMode } from "../../modules/modeReducer";
+import { setHomeView } from "../../modules/homeViewReducer";
 
 const Base = styled.header`
   position: fixed;
@@ -33,10 +34,7 @@ const NavItem = styled.li<{ homeView: string }>`
   &:last-child {
     margin-right: 0;
   }
-  &:hover {
-    font-weight: 500;
-    color: ${(props) => props.theme.colorLight.primary};
-  }
+
   ${(props) =>
     props.id === props.homeView
       ? css`
@@ -57,6 +55,11 @@ const NavItem = styled.li<{ homeView: string }>`
             border-radius: 50%;
             transform: translateX(0%);
           }
+          &:hover {
+            &::after {
+              transform: scale(1.05);
+            }
+          }
         `
       : css`
           font-weight: 300;
@@ -67,6 +70,10 @@ const NavItem = styled.li<{ homeView: string }>`
             height: 30px;
             transform: translateX(-50%);
             opacity: 0;
+          }
+          &:hover {
+            font-weight: 500;
+            color: ${(props) => props.theme.colorLight.primary};
           }
         `}
 `;
@@ -128,12 +135,17 @@ export default function Header() {
     localStorage.setItem("darkMode", JSON.stringify(!isDarkMode));
   };
 
+  const onNavClick = (e: React.MouseEvent<HTMLElement>) => {
+    if (e.target instanceof Element) {
+      dispatch(setHomeView(e.target.id));
+    }
+  };
   return (
     <Base>
       <LogoWrapper>
         <LogoImg src={process.env.PUBLIC_URL + "/assets/logo_70.png"} />
       </LogoWrapper>
-      <Nav>
+      <Nav onClick={(e: React.MouseEvent<HTMLElement>) => onNavClick(e)}>
         <NavItem homeView={homeView} id="main">
           Home
         </NavItem>

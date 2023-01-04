@@ -33,7 +33,7 @@ export default function Home() {
           }
         });
       },
-      { threshold: 0.5 }
+      { threshold: 0.1 }
     );
 
     if(mainRef.current) {
@@ -52,10 +52,37 @@ export default function Home() {
     return () => {
       observer.disconnect();
     };
-  }, [])
+  }, []);
 
-  console.log(homeView)
+  const scroll = () => {
+    const currentRef =
+      homeView === "main"
+        ? mainRef
+        : homeView === "about"
+        ? aboutRef
+        : homeView === "project"
+        ? projectRef
+        : contactRef;
+    
+      if(currentRef && currentRef.current) {
+        const currentElement = currentRef.current;
+        const elementTop = currentElement.offsetTop;
+        const elementHeight = currentElement.offsetHeight;
+        const windowHeight = window.innerHeight;
+        const offset = (windowHeight - elementHeight) / 2;
+        const scrollPosition = elementTop - offset;
 
+        window.scrollTo({
+          top: scrollPosition,
+          behavior: 'smooth'
+        });
+      };
+  };
+  
+  useEffect(() => {
+    scroll();
+  }, [homeView]);
+  
   return (
     <>
       <Section id="main" ref={mainRef}>
