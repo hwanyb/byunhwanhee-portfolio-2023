@@ -6,6 +6,7 @@ import { RootState } from "../../modules";
 
 const Base = styled.div`
   height: 100%;
+  padding: 0 50px;
   display: grid;
   grid-template-columns: 1fr 1fr 2fr;
 `;
@@ -14,7 +15,11 @@ const Profile = styled.div`
   flex-direction: column;
   justify-content: space-between;
 `;
-const Photo = styled.div``;
+const Photo = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;
 const PhotoImg = styled.img`
   width: 280px;
 `;
@@ -53,10 +58,11 @@ const InfoText = styled.p`
   font-size: ${(props) => props.theme.fontSize.base};
   font-weight: 500;
   line-height: 20px;
-  min-width: 150px;
+  min-width: 160px;
 `;
 const InfoLink = styled.a<{ isDarkMode: boolean }>`
-  min-width: 150px;
+text-align: left;
+  min-width: 160px;
   text-decoration: none;
   font-weight: 500;
   ${(props) =>
@@ -67,6 +73,9 @@ const InfoLink = styled.a<{ isDarkMode: boolean }>`
       : css`
           color: ${props.theme.colorLight.fontPrimary};
         `}
+        &:hover {
+          font-weight:700
+        }
 `;
 const Introduce = styled.div`
   & p {
@@ -127,8 +136,7 @@ const SkillSummary = styled.summary`
   display: flex;
   align-items: center;
   &:hover {
-  font-weight: 700;
-
+    font-weight: 700;
   }
 `;
 const SkillLogo = styled.svg<{ isDarkMode: boolean }>`
@@ -136,7 +144,10 @@ const SkillLogo = styled.svg<{ isDarkMode: boolean }>`
   height: 15px;
   line-height: 30px;
   margin-right: 5px;
-  fill: ${props => props.isDarkMode ? props.theme.colorDark.fontPrimary : props.theme.colorLight.fontPrimary};
+  fill: ${(props) =>
+    props.isDarkMode
+      ? props.theme.colorDark.fontPrimary
+      : props.theme.colorLight.fontPrimary};
 `;
 
 export default function About() {
