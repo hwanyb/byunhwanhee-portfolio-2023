@@ -1,6 +1,7 @@
 import React from "react";
 import styled, { css } from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
+
 import { RootState } from "../../modules";
 import { setIsDarkMode } from "../../modules/modeReducer";
 
@@ -22,20 +23,52 @@ const Nav = styled.nav`
   display: flex;
   justify-self: end;
 `;
-const NavItem = styled.li`
+const NavItem = styled.li<{ homeView: string }>`
+  position: relative;
   text-align: center;
   min-width: 100px;
   font-family: ${(props) => props.theme.fontFamily.notoSerif};
   font-size: ${(props) => props.theme.fontSize.base};
-  font-weight: 300;
   transition: all 0.2s ease-in-out;
   &:last-child {
     margin-right: 0;
   }
   &:hover {
-    font-weight: 700;
+    font-weight: 500;
     color: ${(props) => props.theme.colorLight.primary};
   }
+  ${(props) =>
+    props.id === props.homeView
+      ? css`
+          font-weight: 700;
+          color: ${(props) => props.theme.colorDark.fontPrimary};
+          &::after {
+            content: "";
+            box-sizing: border-box;
+            width: 100px;
+            height: 30px;
+            background-color: ${props.theme.colorLight.primary};
+            position: absolute;
+            top: -8px;
+            left: 0;
+            z-index: -99;
+            transition: transform 0.5s ease-in-out,
+              opacity 0.1s 0.1s ease-in-out;
+            border-radius: 50%;
+            transform: translateX(0%);
+          }
+        `
+      : css`
+          font-weight: 300;
+          &::after {
+            border-radius: 50%;
+            content: "";
+            width: 100px;
+            height: 30px;
+            transform: translateX(-50%);
+            opacity: 0;
+          }
+        `}
 `;
 const ModeToggleWrapper = styled.div`
   display: flex;
@@ -86,6 +119,9 @@ export default function Header() {
   const isDarkMode = useSelector(
     (state: RootState) => state.modeReducer.isDarkMode,
   );
+  const homeView = useSelector(
+    (state: RootState) => state.homeViewReducer.homeView,
+  );
 
   const onToggleMode = () => {
     dispatch(setIsDarkMode());
@@ -98,10 +134,18 @@ export default function Header() {
         <LogoImg src={process.env.PUBLIC_URL + "/assets/logo_70.png"} />
       </LogoWrapper>
       <Nav>
-        <NavItem>Home</NavItem>
-        <NavItem>About</NavItem>
-        <NavItem>Projects</NavItem>
-        <NavItem>Contact</NavItem>
+        <NavItem homeView={homeView} id="main">
+          Home
+        </NavItem>
+        <NavItem homeView={homeView} id="about">
+          About
+        </NavItem>
+        <NavItem homeView={homeView} id="project">
+          Projects
+        </NavItem>
+        <NavItem homeView={homeView} id="contact">
+          Contact
+        </NavItem>
       </Nav>
       <ModeToggleWrapper>
         <ModeIcon
