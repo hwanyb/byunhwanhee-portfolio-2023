@@ -1,31 +1,75 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 
 import Main from "../components/Home/Main";
 import About from "../components/Home/About";
 import Project from "../components/Home/Project";
 import Contact from "../components/Home/Contact";
-import { ScrollContainer, ScrollPage } from "react-scroll-motion";
+import { setHomeView } from "../modules/homeViewReducer";
+import { RootState } from "../modules";
 
-const Page = styled(ScrollPage)`
-  padding: 150px 200px 0 200px !important;
+const Section = styled.section`
+  height: 100vh;
+  padding: 150px 200px;
 `;
 
 export default function Home() {
+  const dispatch = useDispatch();
+
+  const homeView = useSelector((state: RootState) => state.homeViewReducer.homeView);
+
+  const mainRef = useRef<HTMLElement>(null);
+  const aboutRef = useRef<HTMLElement>(null);
+  const projectRef = useRef<HTMLElement>(null);
+  const contactRef = useRef<HTMLElement>(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            dispatch(setHomeView(entry.target.id));
+          }
+        });
+      },
+      { threshold: 0.5 }
+    );
+
+    if(mainRef.current) {
+      observer.observe(mainRef.current);
+    };
+    if(aboutRef.current) {
+      observer.observe(aboutRef.current);
+    };
+    if(projectRef.current) {
+      observer.observe(projectRef.current);
+    };
+    if(contactRef.current) {
+      observer.observe(contactRef.current);
+    };
+
+    return () => {
+      observer.disconnect();
+    };
+  }, [])
+
+  console.log(homeView)
+
   return (
-    <ScrollContainer snap="mandatory">
-      <Page>
+    <>
+      <Section id="main" ref={mainRef}>
         <Main />
-      </Page>
-      <Page>
+      </Section>
+      <Section id="about" ref={aboutRef}>
         <About />
-      </Page>
-      <Page>
+      </Section>
+      <Section id="project" ref={projectRef}>
         <Project />
-      </Page>
-      <Page>
+      </Section>
+      <Section id="contact" ref={contactRef}>
         <Contact />
-      </Page>
-    </ScrollContainer>
+      </Section>
+    </>
   );
 }
