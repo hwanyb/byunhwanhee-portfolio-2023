@@ -1,9 +1,11 @@
 import { combineReducers } from "redux";
 
 import modeReducer from "./modeReducer";
+import homeViewReducer from "./homeViewReducer";
 
 const rootReducer = combineReducers({
-    modeReducer
+    modeReducer,
+    homeViewReducer
 });
 
 export default rootReducer;
