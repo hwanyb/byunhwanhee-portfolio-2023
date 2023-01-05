@@ -37,7 +37,7 @@ export default function Comment() {
   useEffect(() => {
     dbService
       .collection("comment")
-      .orderBy("timestamp")
+      .orderBy("timestamp", "desc")
       .onSnapshot((snapshot) => {
         const commentArr: any = snapshot.docs.map((comment) => ({
           ...comment.data(),
