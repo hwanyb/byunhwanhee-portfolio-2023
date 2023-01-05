@@ -1,19 +1,200 @@
 import EmojiPicker, { Emoji, EmojiClickData } from "emoji-picker-react";
 import React, { useEffect, useState } from "react";
-import styled from "styled-components";
+import { useSelector } from "react-redux";
+import styled, { css } from "styled-components";
 import { dbService } from "../../../firebase";
+import { RootState } from "../../../modules";
 
-const Base = styled.div``;
-const CommentInputWrapper = styled.div``;
-const CommentEmojiBtn = styled.button``;
-const EmojiPickerWrapper = styled.div``;
-const AddIcon = styled.div``;
-const CommentTextInput = styled.input``;
-const CommentSubmitBtn = styled.button``;
-const CommentList = styled.ul``;
-const CommentItem = styled.li``;
-const CommentText = styled.h4``;
-const CommentDate = styled.p``;
+const Base = styled.div`
+  width: 800px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: 0 auto;
+`;
+const CommentInputWrapper = styled.div`
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+`;
+const CommentEmojiBtn = styled.button<{
+  isDarkMode: boolean;
+  isEmoji: boolean;
+}>`
+  width: 30px;
+  height: 30px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 5px 0;
+  border-radius: 50%;
+  border: none;
+  cursor: pointer;
+  margin-right: 20px;
+  ${(props) =>
+    props.isDarkMode
+      ? css`
+          background-color: ${props.theme.colorLight.background};
+        `
+      : css`
+          background-color: ${props.theme.colorDark.background};
+        `}
+  transition: all 0.2s ease-in-out;
+  &:hover {
+    ${(props) =>
+      props.isEmoji
+        ? css`
+            & img {
+              transform: scale(1.1);
+              transition: all 0.2s ease-in-out;
+            }
+          `
+        : css`
+            transform: rotate(90deg);
+          `}
+  }
+`;
+const EmojiPickerWrapper = styled.div`
+  width: 100%;
+  position: absolute;
+  top: 80px;
+  left: 50%;
+  transform: translateX(-25%);
+`;
+const AddIcon = styled.div<{ isDarkMode: boolean }>`
+  &::after {
+    position: absolute;
+    content: "";
+    width: 1px;
+    height: 20px;
+    background-color: ${(props) =>
+      props.isDarkMode
+        ? props.theme.colorDark.background
+        : props.theme.colorLight.background};
+    display: block;
+  }
+  &::before {
+    position: absolute;
+    content: "";
+    width: 1px;
+    height: 20px;
+    background-color: ${(props) =>
+      props.isDarkMode
+        ? props.theme.colorDark.background
+        : props.theme.colorLight.background};
+    display: block;
+    transform: rotate(90deg);
+  }
+`;
+const CommentTextInput = styled.textarea<{ isDarkMode: boolean }>`
+  font-family: ${(props) => props.theme.fontFamily.notoSans};
+  font-weight: 300;
+  width: 640px;
+  height: 30px;
+  padding: 5px 20px;
+  border-radius: 0;
+  background-color: transparent;
+  transition: all 0.2s ease-in-out;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+  ${(props) =>
+    props.isDarkMode
+      ? css`
+          border: 1px solid ${props.theme.colorDark.fontPrimary};
+          color: ${props.theme.colorDark.fontPrimary};
+
+          &:focus {
+            background-color: ${props.theme.colorDark.fontPrimary}1E;
+          }
+        `
+      : css`
+          border: 1px solid ${props.theme.colorLight.fontPrimary};
+          color: ${props.theme.colorLight.fontPrimary};
+
+          &:focus {
+            background-color: ${props.theme.colorLight.fontPrimary}1E;
+          }
+        `}
+  &:focus {
+    border-radius: 0;
+  }
+`;
+const CommentSubmitBtn = styled.button<{ isDarkMode: boolean }>`
+  font-family: ${(props) => props.theme.fontFamily.rozha};
+  border: none;
+  margin-left: 20px;
+  border-radius: 50%;
+  transition: all 0.2s ease-in-out;
+
+  &:hover {
+    ${(props) =>
+      props.disabled === false &&
+      css`
+        transform: scale(1.1);
+        cursor: pointer;
+      `}
+  }
+
+  ${(props) =>
+    props.isDarkMode
+      ? css`
+          background-color: ${props.theme.colorDark.fontPrimary};
+          color: ${props.theme.colorDark.background};
+          ${props.disabled &&
+          css`
+            opacity: 0.2;
+          `}
+        `
+      : css`
+          background-color: ${props.theme.colorLight.fontPrimary};
+          color: ${props.theme.colorLight.background};
+          ${props.disabled &&
+          css`
+            opacity: 0.2;
+          `}
+        `}
+`;
+const CommentList = styled.ul<{ isDarkMode: boolean }>`
+  width: 100%;
+  height: 300px;
+  overflow-x: hidden;
+  overflow-y: auto;
+  margin-top: 30px;
+  &::-webkit-scrollbar {
+    width: 3px;
+    background-color: transparent;
+  }
+  &::-webkit-scrollbar-thumb {
+    ${(props) =>
+      props.isDarkMode
+        ? css`
+            background-color: ${props.theme.colorDark.fontPrimary};
+          `
+        : css`
+            background-color: ${props.theme.colorLight.fontPrimary};
+          `}
+  }
+`;
+const CommentItem = styled.li`
+  display: flex;
+  margin-bottom: 20px;
+`;
+const CommentText = styled.h4`
+  font-size: ${(props) => props.theme.fontSize.base};
+  font-weight: 500;
+  margin-left: 20px;
+  line-height: 20px;
+  white-space: pre;
+`;
+const CommentDate = styled.p`
+  font-size: ${(props) => props.theme.fontSize.xs};
+  font-weight: 300;
+  opacity: 0.7;
+  line-height: 10px;
+`;
 
 type CommentProps = {
   createdAt: string;
@@ -23,6 +204,10 @@ type CommentProps = {
 };
 
 export default function Comment() {
+  const isDarkMode = useSelector(
+    (state: RootState) => state.modeReducer.isDarkMode,
+  );
+
   const [isOpenedEmojiPicker, setIsOpenedEmojiPicker] =
     useState<boolean>(false);
   const [commentObj, setCommentObj] = useState<CommentProps>({
@@ -46,7 +231,7 @@ export default function Comment() {
       });
   }, []);
 
-  const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const onChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
     setCommentObj({
       ...commentObj,
       text: event.target.value,
@@ -110,25 +295,29 @@ export default function Comment() {
           )}
         </EmojiPickerWrapper>
         <CommentEmojiBtn
+          isDarkMode={isDarkMode}
           id="emoji"
           onClick={(event: React.MouseEvent<HTMLButtonElement>) =>
             onClick(event)
           }
+          isEmoji={commentObj.emoji === "" ? false : true}
         >
           {commentObj.emoji === "" ? (
-            <AddIcon />
+            <AddIcon isDarkMode={isDarkMode} />
           ) : (
-            <Emoji unified={emoji} size={24} />
+            <Emoji unified={emoji} size={20} />
           )}
         </CommentEmojiBtn>
         <CommentTextInput
+          spellCheck={false}
           value={text}
-          type="text"
-          onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
+          onChange={(event: React.ChangeEvent<HTMLTextAreaElement>) =>
             onChange(event)
           }
+          isDarkMode={isDarkMode}
         />
         <CommentSubmitBtn
+          isDarkMode={isDarkMode}
           id="submit"
           onClick={(event: React.MouseEvent<HTMLButtonElement>) =>
             onClick(event)
@@ -138,12 +327,14 @@ export default function Comment() {
           Submit
         </CommentSubmitBtn>
       </CommentInputWrapper>
-      <CommentList>
+      <CommentList isDarkMode={isDarkMode}>
         {comments.map((comment, index) => (
           <CommentItem key={index}>
             <Emoji unified={comment.emoji} size={30} />
-            <CommentText>{comment.text}</CommentText>
-            <CommentDate>{comment.createdAt}</CommentDate>
+            <CommentText>
+              <CommentDate>{comment.createdAt}</CommentDate>
+              {comment.text}
+            </CommentText>
           </CommentItem>
         ))}
       </CommentList>
