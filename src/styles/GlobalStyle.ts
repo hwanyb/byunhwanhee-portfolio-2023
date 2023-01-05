@@ -15,6 +15,12 @@ const GlobalStyle = createGlobalStyle`
     li {
         list-style: none;
     }
+    textarea {
+        border: none;
+        outline: none;
+        resize: none;
+        padding: 0;
+    }
 `;
 
 export default GlobalStyle;
