@@ -178,9 +178,20 @@ const CommentList = styled.ul<{ isDarkMode: boolean }>`
           `}
   }
 `;
-const CommentItem = styled.li`
+const CommentItem = styled.li<{ isDarkMode: boolean }>`
   display: flex;
   margin-bottom: 20px;
+  border-bottom: 1px solid black;
+  padding-bottom: 10px;
+  margin-right: 30px;
+  ${(props) =>
+    props.isDarkMode
+      ? css`
+          border-bottom: 1px solid ${props.theme.colorDark.fontPrimary};
+        `
+      : css`
+          border-bottom: 1px solid ${props.theme.colorLight.fontPrimary};
+        `}
 `;
 const CommentText = styled.h4`
   font-size: ${(props) => props.theme.fontSize.base};
@@ -329,7 +340,7 @@ export default function Comment() {
       </CommentInputWrapper>
       <CommentList isDarkMode={isDarkMode}>
         {comments.map((comment, index) => (
-          <CommentItem key={index}>
+          <CommentItem isDarkMode={isDarkMode} key={index}>
             <Emoji unified={comment.emoji} size={30} />
             <CommentText>
               <CommentDate>{comment.createdAt}</CommentDate>
