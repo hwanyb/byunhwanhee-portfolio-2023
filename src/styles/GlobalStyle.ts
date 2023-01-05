@@ -10,6 +10,9 @@ const GlobalStyle = createGlobalStyle`
         font-size: 14px;
         font-family: 'Noto Sans KR';
         overflow-x: hidden;
+        &::-webkit-scrollbar {
+            display: none;
+        }
     }
     
     li {
