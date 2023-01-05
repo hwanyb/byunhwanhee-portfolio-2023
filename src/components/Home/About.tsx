@@ -29,11 +29,11 @@ const Info = styled.div`
   flex-direction: column;
   justify-content: space-between;
 `;
-const InfoItem = styled.div`
+export const InfoItem = styled.div`
   display: flex;
   justify-content: center;
 `;
-const Label = styled.label<{ isDarkMode: boolean }>`
+export const Label = styled.label<{ isDarkMode: boolean }>`
   display: block;
   line-height: 20px;
   margin-right: 20px;
@@ -54,13 +54,13 @@ const Label = styled.label<{ isDarkMode: boolean }>`
           color: ${props.theme.colorLight.background};
         `}
 `;
-const InfoText = styled.p`
+export const InfoText = styled.p`
   font-size: ${(props) => props.theme.fontSize.base};
   font-weight: 500;
   line-height: 20px;
   min-width: 160px;
 `;
-const InfoLink = styled.a<{ isDarkMode: boolean }>`
+export const InfoLink = styled.a<{ isDarkMode: boolean }>`
 text-align: left;
   min-width: 160px;
   text-decoration: none;
