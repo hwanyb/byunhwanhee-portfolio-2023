@@ -1,10 +1,11 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { Route, Routes } from "react-router";
 import { BrowserRouter } from "react-router-dom";
 import styled from "styled-components";
 
 import Header from "./components/common/Header";
+import Loading from "./components/common/Loading";
 import { RootState } from "./modules";
 import Home from "./pages/Home";
 import Projects from "./pages/Projects";
@@ -22,6 +23,12 @@ function App() {
   useEffect(() => {
     localStorage.setItem("darkMode", JSON.stringify(isDarkMode));
   }, []);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
+  useEffect(() => {
+    setTimeout(() => {
+      setIsLoading(false);
+    }, 4000);
+  }, []);
 
   const isDarkMode = useSelector(
     (state: RootState) => state.modeReducer.isDarkMode,
@@ -29,13 +36,17 @@ function App() {
   
   return (
     <Base isDarkMode={isDarkMode}>
-      <BrowserRouter>
-        <Header />
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/projects" element={<Projects />} />
-        </Routes>
-      </BrowserRouter>
+      {isLoading ? (
+        <Loading />
+      ) : (
+        <BrowserRouter>
+          <Header />
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/projects" element={<Projects />} />
+          </Routes>
+        </BrowserRouter>
+      )}
     </Base>
   );
 }
